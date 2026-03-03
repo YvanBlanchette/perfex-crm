@@ -1,20 +1,6 @@
 <?php
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\AuthController;
-use App\Http\Controllers\Api\ClientController;
-use App\Http\Controllers\Api\ContactController;
-use App\Http\Controllers\Api\ProjectController;
-use App\Http\Controllers\Api\TaskController;
-use App\Http\Controllers\Api\InvoiceController;
-use App\Http\Controllers\Api\PaymentController;
-use App\Http\Controllers\Api\LeadController;
-use App\Http\Controllers\Api\DashboardController;
-use App\Http\Controllers\Api\UserController;
-use App\Http\Controllers\Api\ExpenseController;
-use App\Http\Controllers\Api\EstimateController;
-use App\Http\Controllers\Api\SettingsController;
-use App\Http\Controllers\Api\NotificationController;
-use App\Http\Controllers\Api\ActivityController;
+use App\Http\Controllers\Api\{AuthController,ClientController,ContactController,ProjectController,TaskController,InvoiceController,PaymentController,LeadController,DashboardController,UserController,ExpenseController,EstimateController,SettingsController,NotificationController,ActivityController};
 
 Route::post('/login',    [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
@@ -28,18 +14,18 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/dashboard',               [DashboardController::class, 'index']);
     Route::get('/dashboard/revenue-chart', [DashboardController::class, 'revenueChart']);
 
-    Route::apiResource('users',    UserController::class);
+    Route::apiResource('users', UserController::class);
     Route::put('/users/{user}/toggle-status', [UserController::class, 'toggleStatus']);
 
-    Route::apiResource('clients',  ClientController::class);
+    Route::apiResource('clients', ClientController::class);
     Route::get('/clients/{client}/projects', [ClientController::class, 'projects']);
     Route::get('/clients/{client}/invoices', [ClientController::class, 'invoices']);
     Route::get('/clients/{client}/contacts', [ClientController::class, 'contacts']);
     Route::apiResource('contacts', ContactController::class);
 
     Route::apiResource('projects', ProjectController::class);
-    Route::post('/projects/{project}/members',            [ProjectController::class, 'addMember']);
-    Route::delete('/projects/{project}/members/{user}',   [ProjectController::class, 'removeMember']);
+    Route::post('/projects/{project}/members',          [ProjectController::class, 'addMember']);
+    Route::delete('/projects/{project}/members/{user}', [ProjectController::class, 'removeMember']);
 
     Route::apiResource('tasks', TaskController::class);
     Route::put('/tasks/{task}/status',       [TaskController::class, 'updateStatus']);
@@ -69,11 +55,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/settings/company',  [SettingsController::class, 'company']);
     Route::post('/settings/company', [SettingsController::class, 'updateCompany']);
 
-    Route::get('/notifications',            [NotificationController::class, 'index']);
-    Route::get('/notifications/unread',     [NotificationController::class, 'unread']);
-    Route::put('/notifications/{id}/read',  [NotificationController::class, 'markRead']);
-    Route::put('/notifications/read-all',   [NotificationController::class, 'markAllRead']);
-    Route::delete('/notifications/{id}',    [NotificationController::class, 'destroy']);
+    Route::get('/notifications',           [NotificationController::class, 'index']);
+    Route::get('/notifications/unread',    [NotificationController::class, 'unread']);
+    Route::put('/notifications/{id}/read', [NotificationController::class, 'markRead']);
+    Route::put('/notifications/read-all',  [NotificationController::class, 'markAllRead']);
+    Route::delete('/notifications/{id}',   [NotificationController::class, 'destroy']);
 
     Route::get('/activities', [ActivityController::class, 'index']);
 });
